@@ -1,5 +1,6 @@
 #!/bin/bash
 H=/home/system/develop/headers/os
+SYSINCLUDES=-I/boot/system/develop/headers/be -I/boot/system/develop/headers/cpp -I/boot/system/develop/headers/posix 
 L=/home/system/lib
 P=/boot/system/develop/headers/python2.7
 PLIB=/boot/system/lib/libpython2.7.so.1.0
@@ -16,8 +17,14 @@ swig -c++ -python -I$H -I$P -outcurrentdir -v -macroerrors ../../swig/haiku-swig
 echo "----------------------------------"
 echo "Compiling Haiku Python C++ wrapper"
 echo "----------------------------------"
-g++ haiku-swig-python_wrap.cxx -c -std=c++11 -fpermissive  -U$H/app -I$H/support -I$P -L$PLIB $HLIBS
-#g++ -shared -L$L/libbe.so -L$PLIB haikuswigpython_wrap,so
+g++ $SYSINCLUDES -c -std=c++11 -fpermissive  -I$H/app -I$H/support -I$P -L$PLIB $HLIBS haiku-swig-python_wrap.cxx  -o haiku-swig-python_wrap.o
+
+
+
+echo "----------------------------------"
+echo "Linking Haiku Python C++ wrapper"
+echo "----------------------------------"
+g++ -shared -L$L/libbe.so -L$PLIB haiku-swig-python_wrap.o -o haiku-swig-python_wrap.so
 
 echo "----------------------------------"
 echo "Done."

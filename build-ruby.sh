@@ -1,5 +1,6 @@
 #!/bin/bash
 H=/home/system/develop/headers/os
+SYSINCLUDES=-I/boot/system/develop/headers/be -I/boot/system/develop/headers/cpp -I/boot/system/develop/headers/posix 
 L=/home/system/lib
 R=/boot/system/develop/headers/ruby-2.2.0
 RCONFIG=/boot/system/develop/headers/ruby-2.2.0/x86_64-haiku
@@ -17,8 +18,12 @@ swig -c++ -ruby -I$H -I$R -I$RCONFIG -outcurrentdir -v -macroerrors ../../swig/h
 echo "----------------------------------"
 echo "Compiling Haiku Ruby C++ wrapper"
 echo "----------------------------------"
-g++ haiku-swig-ruby_wrap.cxx -c -std=c++11 -fpermissive  -U$H/app -I$H/support -I$R -I$RCONFIG -L$RLIB $HLIBS
-#g++ -shared -L$L/libbe.so -L$PLIB haikuswigpython_wrap,so
+g++ $SYSINCLUDES -c -std=c++11 -fpermissive -I$H/app -I$H/support -I$R -I$RCONFIG -L$RLIB $HLIBS haiku-swig-ruby_wrap.cxx 
+
+echo "----------------------------------"
+echo "Linking Haiku Ruby C++ wrapper"
+echo "----------------------------------"
+g++ -shared -L$L/libbe.so -L$RLIB haiku-swig-ruby_wrap.o -o libhaikuruby.so 
 
 echo "----------------------------------"
 echo "Done."
