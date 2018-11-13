@@ -24,7 +24,7 @@ g++ $SYSINCLUDES -c -std=c++11 -fpermissive  -I$H/app -I$H/support -I$P -L$PLIB 
 echo "----------------------------------"
 echo "Linking Haiku Python C++ wrapper"
 echo "----------------------------------"
-g++ -shared -L$L/libbe.so -L$PLIB haiku-swig-python_wrap.o -o haiku-swig-python_wrap.so
+g++ -shared -L$L/libbe.so -L$PLIB haiku-swig-python_wrap.o -o _haiku.so
 
 echo "----------------------------------"
 echo "Done."
