@@ -23,7 +23,7 @@ g++ $SYSINCLUDES -c -std=c++11 -fpermissive -I$H/app -I$H/support -I$R -I$RCONFI
 echo "----------------------------------"
 echo "Linking Haiku Ruby C++ wrapper"
 echo "----------------------------------"
-g++ -shared -L$L/libbe.so -L$RLIB haiku-swig-ruby_wrap.o -o libhaikuruby.so 
+g++ -shared -o libhaikuruby.so haiku-swig-ruby_wrap.o -L$L -lbe `pkg-config --cflags --libs ruby`
 
 echo "----------------------------------"
 echo "Done."

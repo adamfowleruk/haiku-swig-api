@@ -11,20 +11,20 @@ cd generated/swig-python
 echo "---------------------------------"
 echo "Creating Haiku Python C++ wrapper"
 echo "---------------------------------"
-swig -c++ -python -I$H -I$P -outcurrentdir -v -macroerrors ../../swig/haiku-swig-python.i 
+swig -c++ -python -I$H -I$P -outcurrentdir -v -macroerrors ../../swig/haiku-swig-python-beep.i 
 
 
 echo "----------------------------------"
 echo "Compiling Haiku Python C++ wrapper"
 echo "----------------------------------"
-g++ $SYSINCLUDES -c -std=c++11 -fPIC -fpermissive  -I$H/app -I$H/support -I$P -L$PLIB $HLIBS haiku-swig-python_wrap.cxx  -o haiku-swig-python_wrap.o
+g++ $SYSINCLUDES -c -std=c++11 -fpermissive  -I$H/app -I$H/support -I$P -L$PLIB $HLIBS haiku-swig-python-beep_wrap.cxx  -o haiku-swig-python-beep_wrap.o
 
 
 
 echo "----------------------------------"
 echo "Linking Haiku Python C++ wrapper"
 echo "----------------------------------"
-g++ -shared -o _haiku.so haiku-swig-python_wrap.o -L$L -lbe `pkg-config --cflags --libs python`
+g++ -shared -o _haiku.so haiku-swig-python-beep_wrap.o -L$L -lbe `pkg-config --cflags --libs python`
 
 echo "----------------------------------"
 echo "Done."
