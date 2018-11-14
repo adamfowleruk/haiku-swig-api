@@ -12,18 +12,18 @@ cd generated/swig-ruby
 echo "---------------------------------"
 echo "Creating Haiku Ruby C++ wrapper"
 echo "---------------------------------"
-swig -c++ -ruby -I$H -I$R -I$RCONFIG -outcurrentdir -v -macroerrors ../../swig/haiku-swig-ruby.i 
+swig -c++ -ruby -I$H -I$R -I$RCONFIG -outcurrentdir -v -macroerrors ../../swig/haiku-swig-ruby-string.i 
 
 
 echo "----------------------------------"
 echo "Compiling Haiku Ruby C++ wrapper"
 echo "----------------------------------"
-g++ $SYSINCLUDES -c -std=c++11 -fpermissive -I$H/app -I$H/support -I$R -I$RCONFIG -L$RLIB $HLIBS haiku-swig-ruby_wrap.cxx 
+g++ $SYSINCLUDES -c -std=c++11 -fpermissive -I$H/app -I$H/support -I$R -I$RCONFIG -L$RLIB $HLIBS haiku-swig-ruby-string_wrap.cxx 
 
 echo "----------------------------------"
 echo "Linking Haiku Ruby C++ wrapper"
 echo "----------------------------------"
-g++ -shared -o libhaikuruby.so haiku-swig-ruby_wrap.o -L$L -lbe -lruby
+g++ -shared -o libhaikuruby.so haiku-swig-ruby-string_wrap.o -L$L -lbe -lruby
 
 echo "----------------------------------"
 echo "Done."
