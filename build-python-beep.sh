@@ -1,10 +1,8 @@
 #!/bin/bash
 H=/home/system/develop/headers/os
 SYSINCLUDES=-I/boot/system/develop/headers/be -I/boot/system/develop/headers/cpp -I/boot/system/develop/headers/posix 
-L=/home/system/lib
+L=/boot/system/lib
 P=/boot/system/develop/headers/python2.7
-PLIB=/boot/system/lib/libpython2.7.so.1.0
-HLIBS=-L/boot/system/lib/libbe.so
 mkdir -p generated/swig-python
 cd generated/swig-python
 
@@ -17,7 +15,7 @@ swig -c++ -python -I$H -I$P -outcurrentdir -v -macroerrors ../../swig/haiku-swig
 echo "----------------------------------"
 echo "Compiling Haiku Python C++ wrapper"
 echo "----------------------------------"
-g++ $SYSINCLUDES -c -std=c++11 -fpermissive  -I$H/app -I$H/support -I$P -L$PLIB $HLIBS haiku-swig-python-beep_wrap.cxx  -o haiku-swig-python-beep_wrap.o
+g++ $SYSINCLUDES -c -std=c++11 -fpermissive  -I$H/app -I$H/support -I$P haiku-swig-python-beep_wrap.cxx  -o haiku-swig-python-beep_wrap.o
 
 
 
