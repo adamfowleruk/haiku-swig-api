@@ -9,7 +9,7 @@ cd generated/swig-python
 echo "---------------------------------"
 echo "Creating Haiku Python C++ wrapper"
 echo "---------------------------------"
-swig -c++ -python -I$H -I$P -outcurrentdir -v -macroerrors ../../swig/haiku-swig-python.i 
+swig -c++ -python -shadow -I$H -I$P -outcurrentdir -v -macroerrors ../../swig/haiku-swig-python.i 
 
 
 echo "----------------------------------"

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "WARNING: You must run ./build-python-string.sh from the root folder before executing this example"
+echo "WARNING: You must run ./build-python.sh from the root folder before executing this example"
 
 export PYTHONPATH="../../../generated/swig-python:/boot/system/lib"
 
