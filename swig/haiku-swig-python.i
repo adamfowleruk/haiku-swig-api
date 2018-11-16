@@ -7,12 +7,26 @@
 // special handling for Haiku OS types
 %apply int { int32 };
 %apply const int& { const int32& };
+// kernel/OS.h :-
+%apply int { thread_id };
+%apply const int& { const thread_id& };
+%apply int { area_id };
+%apply const int& { const area_id& };
+%apply int { sem_id };
+%apply const int& { const sem_id& };
+%apply int { team_id };
+%apply const int& { const team_id& };
+%apply int { thread_id };
+%apply const int& { const thread_id& };
+// DateTime.h and StopWatch.h :-
 %apply long { bigtime_t };
 %apply const long& { const bigtime_t& };
 
 %{
 #include <Beep.h>
 #include <Errors.h>
+#include <TypeConstants.h>
+#include <Locker.h>
 #include <String.h>
 #include <DateTime.h>
 #include <StopWatch.h>
@@ -31,6 +45,10 @@
 %include "/boot/system/develop/headers/os/support/Beep.h"
 
 %include "/boot/system/develop/headers/os/support/Errors.h"
+
+%include "/boot/system/develop/headers/os/support/TypeConstants.h"
+
+%include "/boot/system/develop/headers/os/support/Locker.h"
 
 %ignore SetToFormat(const char*);
 %ignore SetToFormatVarArgs(const char*,va_list);
