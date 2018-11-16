@@ -7,11 +7,15 @@
 // special handling for Haiku OS types
 %apply int { int32 };
 %apply const int& { const int32& };
+%apply long { bigtime_t };
+%apply const long& { const bigtime_t& };
 
 %{
 #include <Beep.h>
+#include <Errors.h>
 #include <String.h>
 #include <DateTime.h>
+#include <StopWatch.h>
 #include <List.h>
 #include <StringList.h>
 #include <Window.h>
@@ -26,6 +30,8 @@
 
 %include "/boot/system/develop/headers/os/support/Beep.h"
 
+%include "/boot/system/develop/headers/os/support/Errors.h"
+
 %ignore SetToFormat(const char*);
 %ignore SetToFormatVarArgs(const char*,va_list);
 %ignore ScanWithFormat(const char*);
@@ -33,6 +39,8 @@
 %include "/boot/system/develop/headers/os/support/String.h"
 
 %include "/boot/system/develop/headers/os/support/DateTime.h"
+
+%include "/boot/system/develop/headers/os/support/StopWatch.h"
 
 %include "/boot/system/develop/headers/os/support/List.h"
 
