@@ -32,6 +32,8 @@
 #include <StopWatch.h>
 #include <List.h>
 #include <StringList.h>
+#include <Architecture.h>
+#include <Flattenable.h>
 #include <Window.h>
 #include <Application.h>
 #include <Handler.h>
@@ -64,9 +66,20 @@
 
 %include "/boot/system/develop/headers/os/support/StringList.h"
 
+%ignore get_architecture();
+%ignore get_primary_architecture();
+%ignore get_secondary_architectures(const char**,size_t);
+%ignore get_architectures(const char**,size_t);
+%ignore guess_architecture_for_path(const char*);
+%include "/boot/system/develop/headers/os/support/Architecture.h"
+
+
+
 // dependency tree classes
 
-%include "/boot/system/sources/haiku/headers/os/support/Archivable.h"
+%include "/boot/system/develop/headers/os/support/Flattenable.h"
+
+%include "/boot/system/develop/headers/os/support/Archivable.h"
 
 %ignore _get_object_token_(const BHandler*);
 %include "/boot/system/develop/headers/os/app/Handler.h"
