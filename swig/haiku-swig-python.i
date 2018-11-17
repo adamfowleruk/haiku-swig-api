@@ -2,7 +2,11 @@
 
 %include "std_string.i"
 
+// String.h :-
 #define __attribute__(x)
+// Architecture.h :-
+#define __BEGIN_DECLS /*
+#define __END_DECLS */
 
 // special handling for Haiku OS types
 %apply int { int32 };
@@ -21,6 +25,13 @@
 // DateTime.h and StopWatch.h :-
 %apply long { bigtime_t };
 %apply const long& { const bigtime_t& };
+// Window.h :-
+// %apply int { window_type };
+// %apply int { window_look };
+// %apply int { window_feel };
+// %apply int { window_alignment }; 
+// may need to be bool? (0 or 1)
+%apply int { uint32 };
 
 %{
 #include <Beep.h>
@@ -32,7 +43,7 @@
 #include <StopWatch.h>
 #include <List.h>
 #include <StringList.h>
-#include <Architecture.h>
+/* #include <Architecture.h> */
 #include <Flattenable.h>
 #include <Window.h>
 #include <Application.h>
@@ -66,12 +77,12 @@
 
 %include "/boot/system/develop/headers/os/support/StringList.h"
 
-%ignore get_architecture();
-%ignore get_primary_architecture();
-%ignore get_secondary_architectures(const char**,size_t);
-%ignore get_architectures(const char**,size_t);
-%ignore guess_architecture_for_path(const char*);
-%include "/boot/system/develop/headers/os/support/Architecture.h"
+// %ignore get_architecture();
+// %ignore get_primary_architecture();
+// %ignore get_secondary_architectures(const char**,size_t);
+// %ignore get_architectures(const char**,size_t);
+// %ignore guess_architecture_for_path(const char*);
+// %include "/boot/system/develop/headers/os/support/Architecture.h"
 
 
 
@@ -95,4 +106,28 @@
 %ignore BWindow::BWindow(BRect,const char*,window_look,window_feel,uint32,uint32);
 %ignore BWindow::BWindow(BRect,const char*,window_type,uint32);
 %ignore BWindow::BWindow(BMessage*);
+%nodefaultctor BWindow;
+%nodefaultdtor BWindow;
 %include "/boot/system/develop/headers/os/interface/Window.h"
+%extend BWindow {
+  ~BWindow() {
+    Lock();
+  }
+}
+
+// Let's create a helper class to generate window flags
+%inline %{
+class WindowFlags {
+public:
+  WindowFlags() : _flag(0) { };
+  WindowFlags& AsynchronousControls() {
+    _flag = _flag || B_ASYNCHRONOUS_CONTROLS;
+	return *this;
+  };
+  // TODO the above for all other constants for this octal composable type
+  uint32 Flags() { return _flag; };
+private:
+  uint32 _flag;
+};
+%}
+

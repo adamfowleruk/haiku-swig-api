@@ -10,8 +10,10 @@ class MyApp(haiku.BApplication):
 class MainWindow(haiku.BWindow):
     def __init__(self):
         haiku.BWindow.__init__(self,haiku.BRect(100,100,500,400),
-			"Main Window",haiku.B_TITLED_WINDOW,
-			haiku.B_ASYNCHRONOUS_CONTROLS)
+			"I'm a Python Haiku App Main Window",haiku.B_TITLED_WINDOW,
+#			haiku.B_ASYNCHRONOUS_CONTROLS # conversion error as it's an octal type going to a uint32
+			haiku.WindowFlags().AsynchronousControls().Flags() # custom C++ helper class
+			)
 
 def main():
     app = MyApp()

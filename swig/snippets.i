@@ -14,4 +14,3 @@ redo('window_type')
 del redo  # cleaning up the namespace
 del Enum
 %}
-
