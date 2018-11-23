@@ -1,5 +1,8 @@
 %module haiku
 
+%nodefaultctor;
+%nodefaultdtor;
+
 %include "std_string.i"
 
 // String.h :-
@@ -31,7 +34,8 @@
 // %apply int { window_feel };
 // %apply int { window_alignment }; 
 // may need to be bool? (0 or 1)
-%apply int { uint32 };
+%apply unsigned int { uint32 };
+%apply const unsigned int& { const uint32& };
 
 %{
 #include <Beep.h>
@@ -47,6 +51,7 @@
 #include <Flattenable.h>
 #include <Window.h>
 #include <Application.h>
+//#include "/boot/home/git/haiku-swig-api/swig/python/Application.h"
 #include <Handler.h>
 #include <Point.h>
 #include <Rect.h>
@@ -94,8 +99,20 @@
 
 %ignore _get_object_token_(const BHandler*);
 %include "/boot/system/develop/headers/os/app/Handler.h"
+
+%rename(_doRun) Run;
+%extend BLooper {
+  %pythoncode %{
+    def Run(self):
+        self.Lock() # Ensure locked when calling Run()
+        return self._doRun()
+  %}
+}
 %include "/boot/system/develop/headers/os/app/Looper.h"
+
+//%rename(RealBApplication) BApplication;
 %include "/boot/system/develop/headers/os/app/Application.h"
+//%include "python/Application.h"
 
 %include "/boot/system/develop/headers/os/interface/Point.h"
 %include "/boot/system/develop/headers/os/interface/Rect.h"
@@ -106,28 +123,15 @@
 %ignore BWindow::BWindow(BRect,const char*,window_look,window_feel,uint32,uint32);
 %ignore BWindow::BWindow(BRect,const char*,window_type,uint32);
 %ignore BWindow::BWindow(BMessage*);
-%nodefaultctor BWindow;
-%nodefaultdtor BWindow;
-%include "/boot/system/develop/headers/os/interface/Window.h"
+//%nodefaultctor BWindow;
+//%nodefaultdtor BWindow;
 %extend BWindow {
-  ~BWindow() {
-    Lock();
-  }
+  %pythoncode %{
+    def __del__(self):
+        print("In BWindow del")
+        self.Lock()
+  %}
 }
+%include "/boot/system/develop/headers/os/interface/Window.h"
 
-// Let's create a helper class to generate window flags
-%inline %{
-class WindowFlags {
-public:
-  WindowFlags() : _flag(0) { };
-  WindowFlags& AsynchronousControls() {
-    _flag = _flag || B_ASYNCHRONOUS_CONTROLS;
-	return *this;
-  };
-  // TODO the above for all other constants for this octal composable type
-  uint32 Flags() { return _flag; };
-private:
-  uint32 _flag;
-};
-%}
 

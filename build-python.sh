@@ -7,6 +7,8 @@ rm -rf generated/swig-python
 mkdir -p generated/swig-python
 cd generated/swig-python
 
+export CCDEBUG=1
+
 echo "---------------------------------"
 echo "Creating Haiku Python C++ wrapper"
 echo "---------------------------------"
@@ -16,7 +18,7 @@ swig -c++ -python -shadow -I$H -I$P -outcurrentdir -v -macroerrors ../../swig/ha
 echo "----------------------------------"
 echo "Compiling Haiku Python C++ wrapper"
 echo "----------------------------------"
-g++ $SYSINCLUDES -c -std=c++11 -fPIC -fpermissive  -I$H/app -I$H/support -I$P haiku-swig-python_wrap.cxx  -o haiku-swig-python_wrap.o
+g++ $SYSINCLUDES -c -std=c++11 -fPIC -fpermissive  -g -Og -I$H/app -I$H/support -I$P -I./swig haiku-swig-python_wrap.cxx  -o haiku-swig-python_wrap.o
 
 
 
