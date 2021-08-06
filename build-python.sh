@@ -1,8 +1,8 @@
 #!/bin/bash
 H=/home/system/develop/headers/os
-SYSINCLUDES=-I/boot/system/develop/headers/be -I/boot/system/develop/headers/cpp -I/boot/system/develop/headers/posix 
+SYSINCLUDES=-I/boot/system/develop/headers/be -I/boot/system/develop/headers/os -I/boot/system/develop/headers/posix 
 L=/boot/system/lib
-P=/boot/system/develop/headers/python2.7
+P=/boot/system/develop/headers/python3.7m
 rm -rf generated/swig-python
 mkdir -p generated/swig-python
 cd generated/swig-python
