@@ -2,5 +2,5 @@ import haiku
 
 haiku.beep()
 
-print "Hello"
+print("Hello")
 

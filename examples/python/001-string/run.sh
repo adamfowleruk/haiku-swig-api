@@ -5,5 +5,5 @@ echo "WARNING: You must run ./build-python.sh from the root folder before execut
 export PYTHONPATH="../../../generated/swig-python:/boot/system/lib"
 
 echo "Python path: $PYTHONPATH"
-python app.py
+python3 app.py
 
